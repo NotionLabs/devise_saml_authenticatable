@@ -9,6 +9,7 @@ class Devise::SamlSessionsController < Devise::SessionsController
     idp_entity_id = get_idp_entity_id(params)
     request = OneLogin::RubySaml::Authrequest.new
     action = request.create(saml_config(idp_entity_id))
+    set_response_uuid(request)
     redirect_to action
   end
 
@@ -40,6 +41,14 @@ class Devise::SamlSessionsController < Devise::SessionsController
 
   protected
 
+  def set_response_uuid(request)
+    response = OneLogin::RubySaml::Response.new(params[:SAMLResponse])
+    email = response.nameid
+    user = User.find_by_email(email) || EmployeeUser.find_by_email(email)
+    user.last_response_id = request.uuid
+    user.save!
+  end
+  
   # Override devise to send user to IdP logout for SLO
   def after_sign_out_path_for(_)
     request = OneLogin::RubySaml::Logoutrequest.new
