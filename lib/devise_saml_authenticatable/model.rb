@@ -46,6 +46,10 @@ module Devise
           puts key
           puts '------ resource -----'
           puts resource
+          puts '------ saml_response inspect -------'
+          puts saml_response.inspect
+          puts '------ attributes inspect -------'
+          puts attributes.inspect
 
 
           if resource.nil?
