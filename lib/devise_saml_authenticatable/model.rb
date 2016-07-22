@@ -52,6 +52,11 @@ module Devise
 
           # find assertion id from reponse attributes and save as last_response id
           # Assertion ID="Assertion-uuid9bb7a8ff-0155-1b0f-b02a-9a850b1c9de5"
+          puts "============== saml response =============="
+            puts saml_response
+          puts "============== saml attributes =============="
+            puts attributes
+          puts "==========================================="
           resource.last_response_id = "Assertion-uuid9bb7a8ff-0155-1b0f-b02a-9a850b1c9de5" #attributes['Assertion']['ID']
           resource.save!
 
