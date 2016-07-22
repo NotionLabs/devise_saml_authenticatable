@@ -17,6 +17,11 @@ module Devise
         resource = mapping.to.authenticate_with_saml(@response)
         if @response.is_valid? && resource
           resource.after_saml_authentication(@response.sessionindex)
+
+          # save last_response_id
+          resource.last_response_id = @response.response_id
+          resource.save!
+
           success!(resource)
         else
           fail!(:invalid)

@@ -52,11 +52,11 @@ module Devise
 
           # find assertion id from reponse attributes and save as last_response id
           # Assertion ID="Assertion-uuid9bb7a8ff-0155-1b0f-b02a-9a850b1c9de5"
-          puts "============== id ============================="
-          puts saml_response.response_id
+          # puts "============== response id ===================="
+          # puts saml_response.response_id
 
-          resource.last_response_id = saml_response.response_id
-          resource.save!
+          # resource.last_response_id = saml_response.response_id
+          # resource.save!
 
           if Devise.saml_update_user || (resource.new_record? && Devise.saml_create_user)
             set_user_saml_attributes(resource, attributes)
