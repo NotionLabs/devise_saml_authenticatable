@@ -40,6 +40,14 @@ module Devise
           auth_value.try(:downcase!) if Devise.case_insensitive_keys.include?(key)
           resource = where(key => auth_value).first
 
+          puts '----- auth value -----'
+          puts auth_value
+          puts '----- key -------'
+          puts key
+          puts '------ resource -----'
+          puts resource
+
+
           if resource.nil?
             if Devise.saml_create_user
               logger.info("Creating user(#{auth_value}).")
@@ -49,14 +57,6 @@ module Devise
               return nil
             end
           end
-
-          # find assertion id from reponse attributes and save as last_response id
-          # Assertion ID="Assertion-uuid9bb7a8ff-0155-1b0f-b02a-9a850b1c9de5"
-          # puts "============== response id ===================="
-          # puts saml_response.response_id
-
-          # resource.last_response_id = saml_response.response_id
-          # resource.save!
 
           if Devise.saml_update_user || (resource.new_record? && Devise.saml_create_user)
             set_user_saml_attributes(resource, attributes)
